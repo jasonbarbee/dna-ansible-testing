@@ -1,0 +1,28 @@
+
+# We gather interfaces here because nxos_ping does not support the ping from source-interface. This is a quick way to get the IP and make it work.
+
+- nxos_facts:
+    gather_subset: interfaces
+
+- name: Test Core reachability in VRF "{{ test.vrf}}" from "{{ test.source}}" to ISE
+  nxos_ping:
+    dest: "{{ item }}"
+    source: "{{ ansible_net_interfaces[test.source]['ipv4']['address'] }}"
+    vrf: "{{ test.vrf }}"
+  with_items: "{{ ise }}"
+
+- name: Test Core reachability in VRF "{{ test.vrf}}" from "{{ test.source}}" to Targets
+  nxos_ping:
+    dest: "{{ item }}"
+    source: "{{ ansible_net_interfaces[test.source]['ipv4']['address'] }}"
+    vrf: "{{ test.vrf }}"
+  with_items: "{{ test.reachable_test }}"
+
+- name: Confrim Core Unreachability in VRF "{{ test.vrf}}" from "{{ test.source}}" to Targets
+  nxos_ping:
+    dest: "{{ item }}"
+    source: "{{ ansible_net_interfaces[test.source]['ipv4']['address'] }}"
+    vrf: "{{ test.vrf }}"
+    state: absent
+    count: 4
+  with_items: "{{ test.unreachable_test }}"

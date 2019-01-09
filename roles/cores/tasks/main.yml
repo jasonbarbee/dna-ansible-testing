@@ -1,0 +1,6 @@
+---
+- name: Begin Core Nexus VRF Test to Targets
+  include_tasks: nxos-ping.yml
+  with_items: "{{ cores }}"
+  loop_control: 
+    loop_var: test

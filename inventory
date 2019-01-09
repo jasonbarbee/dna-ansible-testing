@@ -1,0 +1,13 @@
+[borders]
+10.1.3.1
+10.1.3.2
+
+[borders:vars]
+ansible_network_os=ios
+
+[cores]
+10.1.2.1
+10.1.2.2
+
+[cores:vars]
+ansible_network_os=nxos

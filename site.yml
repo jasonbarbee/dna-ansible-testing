@@ -1,0 +1,13 @@
+---
+
+- hosts: cores
+  gather_facts: false
+  roles:
+    - secrets
+    - cores
+    
+- hosts: borders
+  gather_facts: false
+  roles:
+    - secrets
+    - borders

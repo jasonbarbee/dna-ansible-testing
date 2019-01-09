@@ -1,0 +1,22 @@
+- name: Test Border reachability in VRF "{{ test.vrf }}" from "{{ test.source}}" to ISE
+  ios_ping:
+    dest: "{{ item }}"
+    source: "{{ test.source }}"
+    vrf: "{{ test.vrf }}"
+  with_items: "{{ ise }}"
+
+- name: Test Border reachability in VRF "{{ test.vrf }}" from "{{ test.source}}" to Targets
+  ios_ping:
+    dest: "{{ item }}"
+    source: "{{ test.source }}"
+    vrf: "{{ test.vrf }}"
+  with_items: "{{ test.reachable_test }}"
+
+- name: Confrim Border Unreachability in VRF "{{ test.vrf }}" from "{{ test.source}}" to Targets
+  ios_ping:
+    dest: "{{ item }}"
+    source: "{{ test.source }}"
+    vrf: "{{ test.vrf }}"
+    state: absent
+    count: 4
+  with_items: "{{ test.unreachable_test }}"

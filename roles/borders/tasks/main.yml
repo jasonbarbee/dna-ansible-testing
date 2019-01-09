@@ -1,0 +1,6 @@
+---
+- name: Begin Border VRF Test to Targets
+  include_tasks: ios-ping.yml
+  with_items: "{{ borders }}"
+  loop_control: 
+    loop_var: test
